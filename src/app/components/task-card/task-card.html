@@ -1,0 +1,15 @@
+<div class="task-card">
+    <div>
+        <h3 [class.completed]="task.completed">
+            {{ task.title }}
+        </h3>
+
+        <p>
+            Status: {{ task.completed ? 'Completed' : 'Pending' }}
+        </p>
+    </div>
+
+    <button (click)="onToggle()">
+        {{ task.completed ? 'Undo' : 'Complete' }}
+    </button>
+</div>

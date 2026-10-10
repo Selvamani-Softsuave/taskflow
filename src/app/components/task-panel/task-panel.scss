@@ -1,0 +1,33 @@
+form {
+  display: grid;
+  gap: 16px;
+  margin: 20px 0;
+
+  div {
+    display: grid;
+    gap: 6px;
+  }
+
+  input,
+  textarea,
+  select {
+    padding: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font: inherit;
+  }
+
+  small {
+    color: #b91c1c;
+  }
+
+  button {
+    padding: 10px 16px;
+    cursor: pointer;
+  }
+
+  button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+}

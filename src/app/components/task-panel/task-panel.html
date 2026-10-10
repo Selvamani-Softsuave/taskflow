@@ -1,0 +1,116 @@
+<section class="task-panel">
+  <h2>My Tasks</h2>
+
+  <form [formGroup]="taskForm" (ngSubmit)="addTask()">
+    <div>
+      <label for="title">Task title *</label>
+
+      <input
+        id="title"
+        type="text"
+        formControlName="title"
+        placeholder="Enter a task title"
+      />
+
+      <small
+        *ngIf="taskForm.controls.title.touched &&
+               taskForm.controls.title.hasError('required')"
+      >
+        Task title is required.
+      </small>
+
+      <small
+        *ngIf="taskForm.controls.title.touched &&
+               taskForm.controls.title.hasError('minlength')"
+      >
+        Task title must contain at least 3 characters.
+      </small>
+
+      <small
+        *ngIf="taskForm.controls.title.touched &&
+               taskForm.controls.title.hasError('maxlength')"
+      >
+        Task title cannot exceed 80 characters.
+      </small>
+    </div>
+
+    <div>
+      <label for="description">Description</label>
+
+      <textarea
+        id="description"
+        formControlName="description"
+        placeholder="Optional task details"
+      ></textarea>
+
+      <small
+        *ngIf="taskForm.controls.description.touched &&
+               taskForm.controls.description.hasError('maxlength')"
+      >
+        Description cannot exceed 250 characters.
+      </small>
+    </div>
+
+    <div>
+      <label for="priority">Priority *</label>
+
+      <select id="priority" formControlName="priority">
+        <option value="Low">Low</option>
+        <option value="Medium">Medium</option>
+        <option value="High">High</option>
+      </select>
+    </div>
+
+    <div>
+      <label for="dueDate">Due date *</label>
+
+      <input
+        id="dueDate"
+        type="date"
+        formControlName="dueDate"
+      />
+
+      <small
+        *ngIf="taskForm.controls['dueDate'].touched &&
+         taskForm.controls['dueDate'].hasError('required')"
+      >
+        Due date is required.
+      </small>
+    </div>
+
+    <button type="submit" [disabled]="taskForm.invalid">
+      Create Task
+    </button>
+  </form>
+
+  <p>
+    {{ completedCount }} completed out of {{ tasks.length }} tasks
+  </p>
+
+  <label for="task-filter">Filter tasks:</label>
+
+  <select id="task-filter" [(ngModel)]="filter">
+    <option value="all">All tasks</option>
+    <option value="pending">Pending</option>
+    <option value="completed">Completed</option>
+  </select>
+
+  <p *ngIf="pendingCount === 0">
+    Great job! No pending tasks.
+  </p>
+
+  <div *ngFor="let task of filteredTasks">
+    <app-task-card
+      [task]="task"
+      (toggle)="toggleTask($event)"
+    ></app-task-card>
+
+    <p *ngIf="task.priority">
+      Priority: {{ task.priority }}
+    </p>
+
+    <p *ngIf="task.dueDate">
+      Due date: {{ task.dueDate | date:'dd MMM yyyy' }}
+    </p>
+  </div>
+</section>
